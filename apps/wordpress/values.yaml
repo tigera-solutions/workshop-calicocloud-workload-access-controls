@@ -1,0 +1,15 @@
+wordpressUsername: admin
+wordpressPassword: mcd0n@lds!!
+persistence:
+  enabled: false
+
+containerPorts:
+  http: 8080
+  https: 8443
+
+mariadb:
+  auth:
+    rootPassword: mcd0n@lds!!
+  primary:
+    persistence:
+      enabled: false
