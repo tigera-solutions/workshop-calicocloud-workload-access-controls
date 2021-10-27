@@ -1,23 +1,77 @@
+# workshop-calicocloud-workload-access-controls
 
-## Setup
+## Prerequisites
 
-Follow the instructions for your operating system.
+Install Kind and Helm.  Follow the instructions for your operating system.
 
   - Kind - https://kind.sigs.k8s.io/docs/user/quick-start/#installation
   - Helm - https://helm.sh/docs/intro/install/
 
-1) kind create cluster --config kind-calico.yaml
+## Setup
 
-2) kubectl cluster-info --context kind-kind
+Create Kind cluster
 
-3) kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+```
+kind create cluster --config setup/kind-calico.yaml
+```
 
-4) kubectl create -f custom-resources.yaml
+Set kubernetes cli context to the new cluster
 
-5) watch kubectl get tigerastatus
+```
+kubectl cluster-info --context kind-kind
+```
 
-6) Connect cluster with curl bash script.
+Install Calico
 
-7) kubectl get tigerastatus
+```
+kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+kubectl create -f setup/custom-resources.yaml
+watch kubectl get tigerastatus
+```
 
+Login to Calico Cloud and connect cluster with kubeadm curl bash script.
 
+```
+kubectl get tigerastatus
+```
+
+Configure Calico Cloud logging
+
+```
+kubectl apply -f setup/felix.yaml
+```
+
+## Deploy some Ubuntu and Wordpress demo apps
+
+```
+kubectl apply -f apps/shell/ubuntu.yaml
+```
+
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install wordpress -f apps/wordpress/values.yaml bitnami/wordpress -n wordpress --create-namespace
+kubectl get pods -n wordpress -w
+```
+
+## Test the demo apps
+
+```
+kubectl exec -n default ubuntu -- id
+``` 
+
+```
+curl -vI http://localhost
+curl -vIk https://localhost
+```
+
+## Global and Namespaced NetworkSets
+
+Live demo
+
+## DNS Policies
+
+Live demo
+
+## Egress Access Gateway
+
+Live demo

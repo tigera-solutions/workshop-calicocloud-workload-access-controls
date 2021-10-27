@@ -10,7 +10,7 @@ spec:
     ipPools:
     - blockSize: 26
       cidr: 10.48.0.0/21
-      encapsulation: None
+      encapsulation: IPIP
       natOutgoing: Enabled
       nodeSelector: all()
 
