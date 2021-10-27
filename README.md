@@ -41,7 +41,7 @@ Configure Calico Cloud logging
 kubectl apply -f setup/felix.yaml
 ```
 
-## Deploy some Ubuntu and Wordpress demo apps
+## Deploy Ubuntu and Wordpress demo apps
 
 ```
 kubectl apply -f apps/shell/ubuntu.yaml
